@@ -1,22 +1,33 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
 import { useUser } from "@/hooks/useUser";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useParams, useRouter } from "next/navigation";
+import axios from "axios";
+import qs from "query-string";
 
 export default function Post() {
+  const [title, setTitle] = useState("");
+  const [subTitle, setSubTitle] = useState("");
   const [content, setContent] = useState("");
-  const { isOpen, onClose, type, isSignInActive, isSignUpActive } = useModal();
-
-  const isModalOpen = isOpen && type === "signin";
-
+  const [picture, setPicture] = useState("");
+  const [isPublished, setIsPublished] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
+  const params = useParams();
+  const router = useRouter();
 
   useEffect(() => {
-    console.log(user);
-    if (!user) {
-      redirect("/");
-    }
+    //In case user is logged in
+    const timer = setTimeout(() => {
+      if (!user) {
+        redirect("/");
+      }
+    }, 2000);
+    return () => clearTimeout(timer);
   }, [user]);
 
   const handleContextMenu = (e: any) => {
@@ -25,28 +36,118 @@ export default function Post() {
     alert("Custom Context Menu");
   };
 
+  const handleSaveForLater = async (event: any) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    console.log(user?.user_metadata.username);
+    const username = user?.user_metadata.username;
+    //Is published is false because saving for later
+    const values = {
+      title,
+      subTitle,
+      content,
+      picture,
+      isPublished: false,
+      username,
+    };
+    console.log(values);
+
+    try {
+      const url = qs.stringifyUrl({
+        url: "/api/posts",
+        query: {
+          id: params?.postsId,
+        },
+      });
+      await axios.post(url, values);
+      setIsLoading(false);
+      router.refresh();
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong, post was not successfully saved");
+      router.refresh();
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="w-3/5 p-8 border border-gray-300 rounded shadow-md">
-        <textarea
-          placeholder="Start writing..."
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          onContextMenu={handleContextMenu}
-          className="w-full h-40 border-none outline-none resize-none text-lg mb-4"
-        />
+    <div className="flex justify-center m-16">
+      <div className="w-3/4 h-screen ml-20">
+        <form className="flex flex-col h-full">
+          <div className="mb-6 flex justify-end space-x-4">
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="hover:text-pink-500"
+              onClick={handleSaveForLater}
+            >
+              {isLoading ? "Saving for later..." : "Save for Later"}
+            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              variant="ghost"
+              className="hover:text-pink-500 outline"
+            >
+              {isLoading ? "Saving..." : "Save and Publish"}
+            </Button>
+          </div>
 
-        <label className="block mb-2 text-gray-700">Add Picture</label>
-        <input type="file" className="w-full border border-gray-300 p-2 mb-4" />
+          <div className="mb-8">
+            {/* Enter Title */}
+            <input
+              placeholder="Enter Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="text-5xl bg-[#f4f4f4] border-none focus:outline-none cursor-blink h-16 px-4"
+            />
+          </div>
 
-        <div className="flex items-center mb-4">
-          <label className="mr-2">Convert to Header:</label>
-          <input type="checkbox" className="border border-gray-300 p-2" />
-        </div>
+          {/* Enter Subtitle */}
+          <div className="mb-4">
+            <input
+              placeholder="Enter Subtitle"
+              value={subTitle}
+              onChange={(e) => setSubTitle(e.target.value)}
+              className="text-lg bg-[#f4f4f4] border-none focus:outline-none cursor-blink h-12 px-4"
+            />
+          </div>
 
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-          Publish
-        </button>
+          {/* Picture Preview */}
+          <div className="px-4 mb-4">
+            {picture && <div>There is a picture</div>}
+            {!picture && <div>There is no picture</div>}
+          </div>
+
+          {/* Image Upload */}
+          <div className="grid w-full max-w-sm items-center gap-1.5 px-4 mb-12">
+            <Label htmlFor="picture" className="text-lg">
+              Upload Cover
+            </Label>
+            <Input
+              id="picture"
+              type="file"
+              onChange={(e) => setPicture(e.target.value)}
+            />
+          </div>
+
+          {/* Main Text Area Input */}
+          <div className="h-full">
+            <textarea
+              placeholder="Start writing..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              onContextMenu={handleContextMenu}
+              className="text-xl w-full h-full px-4 p-2 bg-[#f4f4f4] outline-none border-none resize-none"
+              style={{
+                height: "100%",
+                overflowY: "hidden",
+              }}
+            />
+          </div>
+        </form>
       </div>
     </div>
   );

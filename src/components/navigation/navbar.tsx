@@ -62,6 +62,10 @@ const Navbar = () => {
     router.push("/post");
   };
 
+  const goToMyPosts = () => {
+    router.push("/my-posts");
+  };
+
   return (
     !isSSR && (
       <nav className="bg-pink-200 border-secondary-lighter bg-secondary-lighter py-4">
@@ -114,7 +118,9 @@ const Navbar = () => {
                             </div>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Settings</DropdownMenuItem>
+                            <DropdownMenuItem onClick={goToMyPosts}>
+                              Posts Created
+                            </DropdownMenuItem>
                             <DropdownMenuItem>
                               <button
                                 onClick={handleLogout}
