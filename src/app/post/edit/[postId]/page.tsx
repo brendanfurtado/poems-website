@@ -22,14 +22,14 @@ export default function EditPost() {
   const [picture, setPicture] = useState("");
   const [isPublished, setIsPublished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [ID, setID] = useState<string | string[]>("");
   const supabase = supabaseClient;
   const { user } = useUser();
   const { postId } = useParams();
+  const params = useParams();
   const router = useRouter();
 
   useEffect(() => {
-    //first have to get uuid of post from url parameter
     setIsLoading(true);
 
     const timer = setTimeout(() => {
@@ -54,8 +54,9 @@ export default function EditPost() {
           // Check if postData is not empty (post found)
           if (postData && postData.length > 0) {
             const post = postData[0]; // Assuming there's only one post with the same ID
-            console.log(post);
+            // console.log(post);
             // Set your state variables with the post data
+            setID(post.id);
             setTitle(post.title);
             setSubTitle(post.subtitle);
             setContent(post.poem_content);
@@ -87,39 +88,43 @@ export default function EditPost() {
 
   //Use a patch endpoint instead here
 
-  const handleSaveForLater = async (event: any) => {
+  const handleUpdate = async (event: any) => {
     event.preventDefault();
-    // setIsLoading(true);
-    // console.log(user?.user_metadata.username);
-    // const username = user?.user_metadata.username;
-    // //Is published is false because saving for later
-    // const values = {
-    //   title,
-    //   subTitle,
-    //   content,
-    //   picture,
-    //   isPublished: false,
-    //   username,
-    // };
-    // console.log(values);
+    setIsLoading(true);
+    const username = user?.user_metadata.username;
+    const uuid = user?.id;
 
-    // try {
-    //   const url = qs.stringifyUrl({
-    //     url: "/api/posts",
-    //     query: {
-    //       id: params?.postsId,
-    //     },
-    //   });
-    //   await axios.post(url, values);
-    //   setIsLoading(false);
-    //   router.refresh();
-    //   router.push("/");
-    // } catch (error) {
-    //   console.log(error);
-    //   alert("Something went wrong, post was not successfully saved");
-    //   router.refresh();
-    //   setIsLoading(false);
-    // }
+    //Is published is false because saving for later
+    const values = {
+      title,
+      subTitle,
+      content,
+      picture,
+      isPublished: false,
+      username,
+      postId,
+      uuid,
+    };
+    console.log(values);
+
+    try {
+      const url = qs.stringifyUrl({
+        url: "/api/posts",
+        query: {
+          id: params?.postsId,
+        },
+      });
+
+      await axios.patch(url, values);
+      setIsLoading(false);
+      router.refresh();
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong, post was not successfully saved");
+      router.refresh();
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -137,7 +142,7 @@ export default function EditPost() {
                 type="submit"
                 disabled={isLoading}
                 className="hover:text-pink-500"
-                onClick={handleSaveForLater}
+                onClick={handleUpdate}
               >
                 {isLoading ? "Saving for later..." : "Save for Later"}
               </Button>

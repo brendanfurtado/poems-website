@@ -40,8 +40,9 @@ export default function Post() {
     event.preventDefault();
     setIsLoading(true);
 
-    console.log(user?.user_metadata.username);
     const username = user?.user_metadata.username;
+    const uuid = user?.id;
+
     //Is published is false because saving for later
     const values = {
       title,
@@ -50,8 +51,8 @@ export default function Post() {
       picture,
       isPublished: false,
       username,
+      uuid,
     };
-    console.log(values);
 
     try {
       const url = qs.stringifyUrl({

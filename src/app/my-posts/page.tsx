@@ -37,7 +37,7 @@ export default function Posts() {
 
       setListOfPosts(data);
       setIsLoading(false);
-      console.log(data);
+      // console.log(data);
     };
     fetchPosts();
   }, []);

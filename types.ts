@@ -17,8 +17,10 @@ export interface Database {
           is_published: boolean | null;
           poem_content: string | null;
           published_by_user: string;
+          published_by_uuid: string | null;
           subtitle: string | null;
-          title: string | null;
+          title: string;
+          updated_at: string | null;
         };
         Insert: {
           created_at?: string;
@@ -27,8 +29,10 @@ export interface Database {
           is_published?: boolean | null;
           poem_content?: string | null;
           published_by_user: string;
+          published_by_uuid?: string | null;
           subtitle?: string | null;
-          title?: string | null;
+          title: string;
+          updated_at?: string | null;
         };
         Update: {
           created_at?: string;
@@ -37,15 +41,17 @@ export interface Database {
           is_published?: boolean | null;
           poem_content?: string | null;
           published_by_user?: string;
+          published_by_uuid?: string | null;
           subtitle?: string | null;
-          title?: string | null;
+          title?: string;
+          updated_at?: string | null;
         };
         Relationships: [
           {
-            foreignKeyName: "posts_published_by_user_fkey";
-            columns: ["published_by_user"];
+            foreignKeyName: "posts_published_by_uuid_fkey";
+            columns: ["published_by_uuid"];
             referencedRelation: "users";
-            referencedColumns: ["username"];
+            referencedColumns: ["id"];
           }
         ];
       };
