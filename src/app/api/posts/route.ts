@@ -20,7 +20,6 @@ export async function POST(req: Request) {
       },
       { returning: "minimal" } as any
     );
-    // console.log(data, error);
     // Check for errors
     if (error) {
       console.log("Error creating poem:", error);

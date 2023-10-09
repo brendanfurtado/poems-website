@@ -1,6 +1,6 @@
 "use client";
 import { supabaseClient } from "@/config/supabaseClient";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/hooks/useUser";
 import Link from "next/link";
 import { redirect } from "next/navigation";

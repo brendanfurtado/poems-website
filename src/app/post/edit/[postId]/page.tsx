@@ -20,7 +20,7 @@ export default function EditPost() {
   const [subTitle, setSubTitle] = useState("");
   const [content, setContent] = useState("");
   const [picture, setPicture] = useState("");
-  const [isPublished, setIsPublished] = useState(false);
+  const [isPublish, setIsPublished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [ID, setID] = useState<string | string[]>("");
   const supabase = supabaseClient;
@@ -86,9 +86,8 @@ export default function EditPost() {
     alert("Custom Context Menu");
   };
 
-  //Use a patch endpoint instead here
-
-  const handleUpdate = async (event: any) => {
+  //Use a patch endpoint here to update the post, will handle further drafts or full publish
+  const handleUpdate = async (event: any, isPublished: boolean) => {
     event.preventDefault();
     setIsLoading(true);
     const username = user?.user_metadata.username;
@@ -100,7 +99,7 @@ export default function EditPost() {
       subTitle,
       content,
       picture,
-      isPublished: false,
+      isPublished: isPublished,
       username,
       postId,
       uuid,
@@ -142,7 +141,7 @@ export default function EditPost() {
                 type="submit"
                 disabled={isLoading}
                 className="hover:text-pink-500"
-                onClick={handleUpdate}
+                onClick={(event) => handleUpdate(event, false)}
               >
                 {isLoading ? "Saving for later..." : "Save for Later"}
               </Button>
@@ -151,6 +150,7 @@ export default function EditPost() {
                 disabled={isLoading}
                 variant="ghost"
                 className="hover:text-pink-500 outline"
+                onClick={(event) => handleUpdate(event, true)}
               >
                 {isLoading ? "Saving..." : "Save and Publish"}
               </Button>
@@ -176,26 +176,8 @@ export default function EditPost() {
               />
             </div>
 
-            {/* Picture Preview */}
-            <div className="px-4 mb-4">
-              {picture && <div>There is a picture</div>}
-              {!picture && <div>There is no picture</div>}
-            </div>
-
-            {/* Image Upload */}
-            <div className="grid w-full max-w-sm items-center gap-1.5 px-4 mb-12">
-              <Label htmlFor="picture" className="text-lg">
-                Upload Cover
-              </Label>
-              <Input
-                id="picture"
-                type="file"
-                onChange={(e) => setPicture(e.target.value)}
-              />
-            </div>
-
             {/* Main Text Area Input */}
-            <div className="h-full">
+            <div className="h-full mb-32">
               <textarea
                 placeholder="Start writing..."
                 value={content}
@@ -204,7 +186,7 @@ export default function EditPost() {
                 className="text-xl w-full h-full px-4 p-2 bg-[#f4f4f4] outline-none border-none resize-none"
                 style={{
                   height: "100%",
-                  overflowY: "hidden",
+                  overflowY: "auto",
                 }}
               />
             </div>

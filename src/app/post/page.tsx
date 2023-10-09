@@ -73,6 +73,43 @@ export default function Post() {
     }
   };
 
+  const handlePublish = async (event: any) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    const username = user?.user_metadata.username;
+    const uuid = user?.id;
+
+    //Is published is false because saving for later
+    const values = {
+      title,
+      subTitle,
+      content,
+      picture,
+      isPublished: true,
+      username,
+      uuid,
+    };
+
+    try {
+      const url = qs.stringifyUrl({
+        url: "/api/posts",
+        query: {
+          id: params?.postsId,
+        },
+      });
+      await axios.post(url, values);
+      setIsLoading(false);
+      router.refresh();
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong, post was not successfully saved");
+      router.refresh();
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="flex justify-center m-16">
       <div className="w-3/4 h-screen ml-20">
@@ -91,6 +128,7 @@ export default function Post() {
               disabled={isLoading}
               variant="ghost"
               className="hover:text-pink-500 outline"
+              onClick={handlePublish}
             >
               {isLoading ? "Saving..." : "Save and Publish"}
             </Button>
@@ -116,26 +154,8 @@ export default function Post() {
             />
           </div>
 
-          {/* Picture Preview */}
-          <div className="px-4 mb-4">
-            {picture && <div>There is a picture</div>}
-            {!picture && <div>There is no picture</div>}
-          </div>
-
-          {/* Image Upload */}
-          <div className="grid w-full max-w-sm items-center gap-1.5 px-4 mb-12">
-            <Label htmlFor="picture" className="text-lg">
-              Upload Cover
-            </Label>
-            <Input
-              id="picture"
-              type="file"
-              onChange={(e) => setPicture(e.target.value)}
-            />
-          </div>
-
           {/* Main Text Area Input */}
-          <div className="h-full">
+          <div className="h-full mb-32">
             <textarea
               placeholder="Start writing..."
               value={content}
@@ -144,7 +164,7 @@ export default function Post() {
               className="text-xl w-full h-full px-4 p-2 bg-[#f4f4f4] outline-none border-none resize-none"
               style={{
                 height: "100%",
-                overflowY: "hidden",
+                overflowY: "auto",
               }}
             />
           </div>
