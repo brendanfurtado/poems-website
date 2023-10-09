@@ -90,10 +90,9 @@ export default function EditPost() {
   const handleUpdate = async (event: any, isPublished: boolean) => {
     event.preventDefault();
     setIsLoading(true);
+
     const username = user?.user_metadata.username;
     const uuid = user?.id;
-
-    //Is published is false because saving for later
     const values = {
       title,
       subTitle,
@@ -104,7 +103,6 @@ export default function EditPost() {
       postId,
       uuid,
     };
-    console.log(values);
 
     try {
       const url = qs.stringifyUrl({
