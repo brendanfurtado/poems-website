@@ -3,6 +3,7 @@ import { supabaseClient } from "@/config/supabaseClient";
 import { useEffect, useState } from "react";
 import { useUser } from "@/hooks/useUser";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { Trash2 } from "lucide-react";
@@ -20,6 +21,7 @@ const Icons = {
 
 export default function Posts() {
   const supabase = supabaseClient;
+  const router = useRouter();
   const { user } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const [listOfPosts, setListOfPosts] = useState<any>([]);
@@ -35,6 +37,11 @@ export default function Posts() {
         .select()
         .eq("published_by_user", user?.user_metadata.username);
 
+      if (error) {
+        alert("Error fetching posts");
+        setIsLoading(false);
+        return;
+      }
       setListOfPosts(data);
       setIsLoading(false);
       // console.log(data);
@@ -42,7 +49,23 @@ export default function Posts() {
     fetchPosts();
   }, []);
 
-  //TODO: Add a delete post function
+  const deletePost = async (postId: number) => {
+    // Perform a database operation to delete the post
+    const { data, error } = await supabase
+      .from("posts")
+      .delete()
+      .eq("id", postId);
+
+    if (error) {
+      console.error("Error deleting post:", error);
+      return;
+    }
+
+    // Remove the deleted post from the list
+    setListOfPosts((prevList: any) =>
+      prevList.filter((post: any) => post.id !== postId)
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center  py-8">
@@ -71,7 +94,9 @@ export default function Posts() {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>No</DropdownMenuItem>
-                  <DropdownMenuItem>Delete!</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => deletePost(post.id)}>
+                    Delete!
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
