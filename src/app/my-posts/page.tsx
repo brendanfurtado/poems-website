@@ -30,6 +30,7 @@ export default function Posts() {
   if (!user) {
     redirect("/");
   }
+
   useEffect(() => {
     const fetchPosts = async () => {
       const { data, error } = await supabase
@@ -38,13 +39,12 @@ export default function Posts() {
         .eq("published_by_user", user?.user_metadata.username);
 
       if (error) {
-        alert("Error fetching posts");
+        alert("Error fetching user");
         setIsLoading(false);
-        return;
+        router.push("/");
       }
       setListOfPosts(data);
       setIsLoading(false);
-      // console.log(data);
     };
     fetchPosts();
   }, []);
@@ -57,8 +57,9 @@ export default function Posts() {
       .eq("id", postId);
 
     if (error) {
-      console.error("Error deleting post:", error);
-      return;
+      alert("Error fetching user");
+      setIsLoading(false);
+      redirect("/");
     }
 
     // Remove the deleted post from the list
@@ -74,6 +75,8 @@ export default function Posts() {
         <div className="flex justify-center items-center h-screen">
           <Icons.spinner className="animate-spin w-12 h-12 text-pink-500" />
         </div>
+      ) : listOfPosts.length === 0 ? ( // Check if listOfPosts is empty
+        <h1 className="text-2xl">No posts created yet!</h1>
       ) : (
         <div className="bg-gray-100 rounded-lg p-4 shadow-lg">
           {listOfPosts.map((post: any, index: any) => (
@@ -86,7 +89,7 @@ export default function Posts() {
               </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <Trash2 className="w-6 h-6 text-red-500 cursor-pointer" />
+                  <Trash2 className="w-6 h-6 ml-2 text-red-500 cursor-pointer" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>

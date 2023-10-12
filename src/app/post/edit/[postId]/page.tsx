@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
 import { supabaseClient } from "@/config/supabaseClient";

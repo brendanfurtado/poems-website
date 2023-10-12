@@ -35,7 +35,6 @@ export const SignInModal = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>("");
-  const [message, setMessage] = useState<string | null>("");
 
   //Sign in
   const signInEmailRef = useRef<HTMLInputElement>(null);
@@ -60,27 +59,28 @@ export const SignInModal = () => {
     const password = signInPasswordRef.current?.value;
 
     if (email && password) {
-      await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
-      console.log("Successfully signed in.");
+      if (error) {
+        alert(error);
+      }
       onClose(); // Close the modal
       router.refresh();
       router.push("/");
     } else {
+      alert("Email and/or password is undefined.");
       // Handle the case where email or password is undefined
       console.error("Email and/or password is undefined.");
     }
   }
 
   async function handleSignUp(event: any) {
-    console.log("start of sign up");
     event.preventDefault();
 
     //  Reset error and message
     setErrorMsg(null);
-    setMessage(null);
     setIsLoading(true);
     const username = usernameRef.current?.value;
     const email = emailRef.current?.value;
@@ -89,6 +89,7 @@ export const SignInModal = () => {
 
     if (password !== confirmPassword) {
       setErrorMsg("Passwords do not match.");
+      alert(errorMsg);
       setIsLoading(false);
       return;
     }
@@ -96,6 +97,7 @@ export const SignInModal = () => {
     // Check if all fields have values
     if (!username || !email || !password) {
       setErrorMsg("All fields are required");
+      alert(errorMsg);
       setIsLoading(false);
       return;
     }
@@ -111,8 +113,12 @@ export const SignInModal = () => {
           },
         },
       });
+      if (error) {
+        alert(error);
+      }
       console.log("Successfully signed up.");
-      setMessage(
+
+      alert(
         "Successfully signed up. Please check your email to confirm your account."
       );
       onClose(); // Close the modal
@@ -121,13 +127,14 @@ export const SignInModal = () => {
       setIsLoading(false);
 
       if (error) {
+        alert(error);
         setErrorMsg(error.message);
         router.push("/");
         setIsLoading(false);
       }
     } catch {
       setErrorMsg("Failed to create an account");
-      console.log(errorMsg);
+      alert(errorMsg);
       setIsLoading(false);
     }
   }

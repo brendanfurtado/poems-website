@@ -23,7 +23,6 @@ export default function Home() {
   const supabase = supabaseClient;
   const [isLoading, setIsLoading] = useState(true);
   const [listOfPublicPosts, setListOfPublicPosts] = useState<any>([]);
-
   useEffect(() => {
     //Only fetch posts that are published
     const fetchPosts = async () => {
@@ -37,7 +36,6 @@ export default function Home() {
         setIsLoading(false);
         return;
       }
-
       setListOfPublicPosts(data);
       setIsLoading(false);
     };
