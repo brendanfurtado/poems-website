@@ -53,12 +53,13 @@ export default function Posts() {
     const { data, error } = await supabase
       .from("posts")
       .delete()
-      .eq("id", postId);
+      .eq("id", postId)
+      .eq("published_by_user", user?.user_metadata.username);
 
     if (error) {
       alert("Error fetching user");
       setIsLoading(false);
-      redirect("/");
+      router.push("/");
     }
 
     // Remove the deleted post from the list
