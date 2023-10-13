@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Loader2 } from "lucide-react";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -32,7 +31,8 @@ export default function Home() {
       const { data, error } = await supabase
         .from("posts")
         .select("*")
-        .eq("is_published", true);
+        .eq("is_published", true)
+        .order("created_at", { ascending: false }); // Order by created_at in descending order
 
       if (error) {
         alert("Error fetching posts");
@@ -57,10 +57,10 @@ export default function Home() {
           <Icons.spinner className="animate-spin w-12 h-12 text-pink-500" />
         </div>
       ) : (
-        <div className="flex flex-wrap justify-center p-4">
+        <div className="flex flex-col p-4 ">
           {listOfPublicPosts.map((post: any, index: any) => (
-            <div key={index} className="w-full md:w-1/2 lg:w-1/3 p-2">
-              <Card>
+            <div key={index} className="mb-4">
+              <Card style={{ height: "auto", minHeight: "300px" }}>
                 <CardHeader>
                   <CardTitle className="text-lg font-bold">
                     {post.title}
@@ -68,16 +68,23 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-base">{post.subtitle}</p>
-                  <p className="text-sm">{post.poem_content}</p>
+                  <textarea
+                    disabled
+                    className="text-xl w-full px-4 p-2 bg-[#f4f4f4] outline-none border-none resize-vertical"
+                    style={{ minHeight: "350px", maxHeight: "auto" }}
+                    value={post.poem_content}
+                  />
                 </CardContent>
-                <CardFooter className="justify-between">
+                <CardFooter className="flex justify-between">
                   <p className="text-sm text-gray-400">
                     Posted by: {post.published_by_user}
                   </p>
-                  <p className="text-sm text-gray-400">
-                    Post Score: {post.score}
-                  </p>
-                  <HeartButton postId={post.id} />
+                  <div className="flex items-center space-x-2">
+                    <p className="text-sm text-gray-400">
+                      Post Score: {post.score}
+                    </p>
+                    <HeartButton postId={post.id} />
+                  </div>
                 </CardFooter>
               </Card>
             </div>
