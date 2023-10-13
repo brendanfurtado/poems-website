@@ -65,14 +65,11 @@ export const SignInModal = () => {
       });
       if (error) {
         alert(error);
+        return;
       }
       onClose(); // Close the modal
       router.refresh();
       router.push("/");
-    } else {
-      alert("Email and/or password is undefined.");
-      // Handle the case where email or password is undefined
-      console.error("Email and/or password is undefined.");
     }
   }
 
@@ -138,6 +135,11 @@ export const SignInModal = () => {
       setIsLoading(false);
     }
   }
+
+  const redirectToResetPassword = () => {
+    onClose(); // Close the modal
+    router.push("/update");
+  };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -205,7 +207,7 @@ export const SignInModal = () => {
                   {isLoading ? <span>Loading</span> : <span>Sign In</span>}
                 </Button>
                 <Button
-                  onClick={() => {}}
+                  onClick={redirectToResetPassword}
                   disabled={isLoading}
                   variant="link"
                   size="sm"

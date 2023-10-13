@@ -4,7 +4,6 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 import { useEffect, useState } from "react";
 import { useUser } from "@/hooks/useUser";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 import { Loader2 } from "lucide-react";
@@ -12,6 +11,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 const Icons = {
   spinner: Loader2,
 };
@@ -164,7 +172,19 @@ export default function Profile() {
           </div>
         </div>
       )}
-      <Button onClick={deleteUser}>Delete Profile</Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button>Delete Profile</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>
+            Are you sure you want to Delete? All of your posts will be deleted
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>No, do not delete!</DropdownMenuItem>
+          <DropdownMenuItem onClick={deleteUser}>Delete!</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

@@ -12,21 +12,21 @@ export default function Post() {
   const [subTitle, setSubTitle] = useState("");
   const [content, setContent] = useState("");
   const [picture, setPicture] = useState("");
-  const [isPublished, setIsPublished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
   const params = useParams();
   const router = useRouter();
 
   useEffect(() => {
-    //In case user is logged in
+    // In case the user is not logged in, redirect after 2000 milliseconds (2 seconds)
     const timer = setTimeout(() => {
-      if (!user) {
-        redirect("/");
+      if (user === null) {
+        router.push("/");
       }
     }, 2000);
+
     return () => clearTimeout(timer);
-  }, [user]);
+  }, [user, router]);
 
   const handleContextMenu = (e: any) => {
     e.preventDefault();
