@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import HeartButton from "@/components/heart-button";
+import AvatarFinder from "@/components/avatar-finder";
 
 const Icons = {
   spinner: Loader2,
@@ -25,6 +26,9 @@ export default function Home() {
   const { user } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const [listOfPublicPosts, setListOfPublicPosts] = useState<any>([]);
+  // const [listOfAvatars, setListOfAvatars] = useState<any>([]);
+  const [userAvatars, setUserAvatars] = useState<any>({});
+
   useEffect(() => {
     //Only fetch posts that are published
     const fetchPosts = async () => {
@@ -34,11 +38,38 @@ export default function Home() {
         .eq("is_published", true)
         .order("created_at", { ascending: false }); // Order by created_at in descending order
 
+      const { data: avatarsData, error: avatarsError } = await supabase
+        .from("users")
+        .select("id, avatar_url");
+
+      if (avatarsError) {
+        console.log("Error fetching posts or avatars");
+        setIsLoading(false);
+        return;
+      }
+
+      // const { data: joinData, error: joinError } = await supabase.from("posts")
+      //   .select(`
+      //     published_by_uuid,
+      //     users (
+      //       id,
+      //       username,
+      //       avatar_url
+      //     )
+      //   `);
+      // console.log(joinData);
+      // setListOfAvatars(joinData);
       if (error) {
         alert("Error fetching posts");
         setIsLoading(false);
         return;
       }
+
+      const avatarsMap = avatarsData.reduce((map: any, user: any) => {
+        map[user.id] = user.avatar_url;
+        return map;
+      }, {});
+      setUserAvatars(avatarsMap);
       setListOfPublicPosts(data);
       setIsLoading(false);
     };
@@ -59,7 +90,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="flex flex-col p-4 ">
-          {listOfPublicPosts.map((post: any, index: any) => (
+          {listOfPublicPosts.map((post: any, index: 0) => (
             <div key={index} className="mb-4">
               <Card style={{ height: "auto", minHeight: "300px" }}>
                 <CardHeader>
@@ -77,9 +108,19 @@ export default function Home() {
                   />
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <p className="text-sm text-gray-400">
-                    Posted by: {post.published_by_user}
-                  </p>
+                  {/* <div className="text-sm text-gray-400"> */}
+                  <div className="flex items-center">
+                    <p className="text-sm text-gray-400">
+                      Posted by: {post.published_by_user}
+                    </p>
+                    {userAvatars[post.published_by_uuid] && (
+                      <AvatarFinder
+                        userId={post.id}
+                        avatar_url={userAvatars[post.published_by_uuid]}
+                      />
+                    )}
+                  </div>
+                  {/* </div> */}
                   <div className="flex items-center space-x-2">
                     <p className="text-sm text-gray-400">
                       Post Score: {post.score}
@@ -92,6 +133,7 @@ export default function Home() {
           ))}
         </div>
       )}
+      {!isLoading && listOfPublicPosts.length === 0 && <div>No posts</div>}
     </div>
   );
 }

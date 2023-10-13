@@ -38,24 +38,21 @@ export default function Profile() {
     if (!user) {
       redirect("/");
     }
+    const fetchUser = async () => {
+      const { data, error } = await supabase
+        .from("users")
+        .select()
+        .eq("id", user?.id);
 
-    setTimeout(() => {
-      const fetchUser = async () => {
-        const { data, error } = await supabase
-          .from("users")
-          .select()
-          .eq("id", user?.id);
-
-        if (error) {
-          alert("Error fetching user");
-          setIsLoading(false);
-          router.push("/");
-        }
-        setUserData(data);
+      if (error) {
+        alert("Error fetching user");
         setIsLoading(false);
-      };
-      fetchUser();
-    }, 2000);
+        router.push("/");
+      }
+      setUserData(data);
+      setIsLoading(false);
+    };
+    fetchUser();
     //eslint-disable-next-line
   }, [user]);
 
@@ -129,7 +126,6 @@ export default function Profile() {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    console.log(file);
     if (file) {
       // const imageUrl = URL.createObjectURL(file);
       // console.log(imageUrl);
@@ -160,22 +156,22 @@ export default function Profile() {
           </div>
 
           <div className="mb-4">
-            <Image
-              src={updatedUserData.avatar || userData.avatar || ""}
-              alt="Avatar"
-              className="w-20 h-20 rounded-full mx-auto"
-              width={100} // Specify the width
-              height={100} // Specify the height
-            />
+            {updatedUserData.avatar || userData.avatar ? (
+              <Image
+                src={updatedUserData.avatar || userData.avatar}
+                alt="Avatar"
+                className="w-20 h-20 rounded-full mx-auto"
+                width={100}
+                height={100}
+              />
+            ) : null}
           </div>
-          <div className="mb-4">
-            <Button onClick={updateUserProfile}>Update Profile</Button>
-          </div>
+          <Button onClick={updateUserProfile}>Update Profile</Button>
         </div>
       )}
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Button>Delete Profile</Button>
+          <a>Delete Profile</a>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>
