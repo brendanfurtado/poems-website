@@ -45,6 +45,7 @@ export default function Posts() {
       setIsLoading(false);
     };
     fetchPosts();
+    //eslint-disable-next-line
   }, []);
 
   const deletePost = async (postId: number) => {

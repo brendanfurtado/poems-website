@@ -56,6 +56,7 @@ export default function Profile() {
       };
       fetchUser();
     }, 2000);
+    //eslint-disable-next-line
   }, [user]);
 
   const deleteUser = async () => {

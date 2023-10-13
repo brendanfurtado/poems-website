@@ -43,6 +43,7 @@ export default function Home() {
       setIsLoading(false);
     };
     fetchPosts();
+    //eslint-disable-next-line
   }, []);
 
   return (

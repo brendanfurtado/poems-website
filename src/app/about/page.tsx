@@ -2,7 +2,7 @@
 import Image from "next/image";
 import banner from "../../../public/framed180bladesofglory.jpg";
 
-export function About({ children }: { children: React.ReactNode }) {
+export default function About() {
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-4xl font-bold mb-4 items-center">
@@ -38,5 +38,3 @@ export function About({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
-export default About;

@@ -76,6 +76,7 @@ export default function EditPost() {
     }, 2000);
 
     return () => clearTimeout(timer);
+    //eslint-disable-next-line
   }, [postId]);
 
   const handleContextMenu = (e: any) => {

@@ -59,6 +59,7 @@ export const MyUserContextProvider = (props: Props) => {
     } else if (!user && !isLoadingUser && !isLoadingData) {
       setUserDetails(null);
     }
+    //eslint-disable-next-line
   }, [user, isLoadingUser]);
 
   const value = {
