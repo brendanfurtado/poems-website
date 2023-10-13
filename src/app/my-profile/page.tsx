@@ -149,7 +149,7 @@ export default function Profile() {
         <div className="bg-gray-100 rounded-lg p-4 shadow-lg">
           <div className="mb-4">
             <Label className="block text-gray-600 text-sm font-medium mb-2">
-              Select an Avatar
+              Select an Avatar (file size limit: 2MB)
             </Label>
             <Input
               type="file"
