@@ -26,12 +26,10 @@ export default function Posts() {
   const [isLoading, setIsLoading] = useState(true);
   const [listOfPosts, setListOfPosts] = useState<any>([]);
 
-  //TODO: Fix location
-  if (!user) {
-    redirect("/");
-  }
-
   useEffect(() => {
+    if (!user) {
+      redirect("/");
+    }
     const fetchPosts = async () => {
       const { data, error } = await supabase
         .from("posts")

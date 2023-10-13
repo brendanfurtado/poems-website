@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Loader2 } from "lucide-react";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
-
+import { useUser } from "@/hooks/useUser";
 import { supabaseClient } from "@/config/supabaseClient";
 
 import {
@@ -14,13 +14,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import HeartButton from "@/components/heart-button";
 
 const Icons = {
   spinner: Loader2,
+  heart: Heart,
 };
 
 export default function Home() {
   const supabase = supabaseClient;
+  const { user } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const [listOfPublicPosts, setListOfPublicPosts] = useState<any>([]);
   useEffect(() => {
@@ -67,10 +70,14 @@ export default function Home() {
                   <p className="text-base">{post.subtitle}</p>
                   <p className="text-sm">{post.poem_content}</p>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="justify-between">
                   <p className="text-sm text-gray-400">
                     Posted by: {post.published_by_user}
                   </p>
+                  <p className="text-sm text-gray-400">
+                    Post Score: {post.score}
+                  </p>
+                  <HeartButton postId={post.id} />
                 </CardFooter>
               </Card>
             </div>

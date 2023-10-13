@@ -9,6 +9,37 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      post_likes: {
+        Row: {
+          created_at: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_likes_post_id_fkey"
+            columns: ["post_id"]
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_likes_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       posts: {
         Row: {
           created_at: string
@@ -18,6 +49,7 @@ export interface Database {
           poem_content: string | null
           published_by_user: string
           published_by_uuid: string | null
+          score: number
           subtitle: string | null
           title: string
           updated_at: string | null
@@ -30,6 +62,7 @@ export interface Database {
           poem_content?: string | null
           published_by_user: string
           published_by_uuid?: string | null
+          score?: number
           subtitle?: string | null
           title: string
           updated_at?: string | null
@@ -42,6 +75,7 @@ export interface Database {
           poem_content?: string | null
           published_by_user?: string
           published_by_uuid?: string | null
+          score?: number
           subtitle?: string | null
           title?: string
           updated_at?: string | null
@@ -100,7 +134,20 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      decrement: {
+        Args: {
+          x: number
+          row_id: string
+        }
+        Returns: undefined
+      }
+      increment: {
+        Args: {
+          x: number
+          row_id: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
