@@ -126,7 +126,7 @@ const Navbar = () => {
           {/* This is the menu when the user is logged in */}
           <div className="md:flex flex flex-shrink-0 items-center justify-end px-2 md:w-fit lg:px-3">
             {user ? (
-              <div className="mr-5 flex items-center space-x-4 relative">
+              <div className="flex flex-col md:flex-row items-center md:space-x-4 relative">
                 <button
                   onClick={goToPostPage}
                   className="font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-black border-teal-700 hover:border-transparent hover:text-teal-700 hover:bg-white mt-4 lg:mt-0"
