@@ -109,8 +109,8 @@ export default function Post() {
   };
 
   return (
-    <div className="flex justify-center m-16">
-      <div className="w-3/4 h-screen ml-20">
+    <div className="flex flex-col items-center p-4 justify-center space-y-4">
+      <div className="w-full h-screen">
         <form className="flex flex-col h-full">
           <div className="mb-6 flex justify-end space-x-4">
             <Button
