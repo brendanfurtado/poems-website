@@ -143,7 +143,7 @@ export const SignInModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white flex flex-col h-[50%] w-[50%] bg-secondary md:h-[600px] md:max-h-[75vh] md:w-full md:max-w-[600px]  text-black p-0 overflow-hidden">
+      <DialogContent className="bg-white flex flex-col h-[80%] w-[80%] md:h-[600px] md:max-h-[75vh] md:w-full md:max-w-[600px] text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
             <Button
@@ -174,7 +174,10 @@ export const SignInModal = () => {
         </DialogHeader>
         {isSignInFormActive && (
           // Render the Sign In form here
-          <form className="signin-form" onSubmit={handleSignIn}>
+          <form
+            className="signin-form flex-grow overflow-auto"
+            onSubmit={handleSignIn}
+          >
             <div className="p-6">
               <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
                 Login to your Account
@@ -233,7 +236,10 @@ export const SignInModal = () => {
         )}
         {isSignUpFormActive && (
           // Render the Sign Up form here
-          <form className="signup-form" onSubmit={handleSignUp}>
+          <form
+            className="signup-form flex-grow overflow-auto"
+            onSubmit={handleSignUp}
+          >
             <div className="p-6">
               <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
                 Create your Account

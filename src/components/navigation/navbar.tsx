@@ -124,7 +124,7 @@ const Navbar = () => {
           </div>
 
           {/* This is the menu when the user is logged in */}
-          <div className="flex flex-shrink-0 items-center justify-end px-2 md:w-fit lg:px-3">
+          <div className="md:flex flex flex-shrink-0 items-center justify-end px-2 md:w-fit lg:px-3">
             {user ? (
               <div className="mr-5 flex items-center space-x-4 relative">
                 <button
@@ -171,25 +171,27 @@ const Navbar = () => {
               </div>
             ) : (
               <>
-                <div className="mr-5">
-                  <button
-                    onClick={() => {
-                      onOpen("signin", true, false); // Open Sign In modal and set isSignInActive to true
-                    }}
-                    className={`font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-purple-500 border-black hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0 mr-4`}
-                  >
-                    Login
-                  </button>
-                </div>
-                <div>
-                  <button
-                    onClick={() => {
-                      onOpen("signin", false, true); // Open Sign Up modal and set isSignUpActive to true
-                    }}
-                    className={`font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-fuchsia-700 border-black hover:border-transparent hover:text-teal-700 hover:bg-white mt-4 lg:mt-0`}
-                  >
-                    Sign Up
-                  </button>
+                <div className="md:flex md:items-center space-x-4 md:space-x-0">
+                  <div className="mr-5">
+                    <button
+                      onClick={() => {
+                        onOpen("signin", true, false); // Open Sign In modal and set isSignInActive to true
+                      }}
+                      className={`font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-purple-500 border-black hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0 mr-4`}
+                    >
+                      Login
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => {
+                        onOpen("signin", false, true); // Open Sign Up modal and set isSignUpActive to true
+                      }}
+                      className={`font-bold inline-block text-sm px-4 py-2 leading-none border rounded text-fuchsia-700 border-black hover:border-transparent hover:text-teal-700 hover:bg-white mt-4 lg:mt-0`}
+                    >
+                      Sign Up
+                    </button>
+                  </div>
                 </div>
               </>
             )}
