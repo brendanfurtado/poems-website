@@ -1,9 +1,14 @@
 "use client";
+import Image from "next/image";
+import banner from "../../../public/framed180bladesofglory.jpg";
 
 export function About({ children }: { children: React.ReactNode }) {
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-4">About Our Website</h1>
+      <h1 className="text-4xl font-bold mb-4 items-center">
+        About Our Website
+      </h1>
+      <Image src={banner} alt="Picture of the author" />
       <p className="text-lg mb-4">
         Welcome to our poetry community! Our website is a space for creative
         minds to come together, share their poetic expressions, and appreciate
