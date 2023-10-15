@@ -1,4 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a public website - https://www.letmeputmypoemsinyou.com/ 
+
+## Features:
+- Full Authentication services
+- Create poems
+- Save as Draft
+- Delete Poems
+- Upvoting Other Users' poems
+- Uploading and Displaying Avatar
+
+
+## Key Tech Integrations:
+- Supabase DB and Auth
+  - RLS Security
+- Tailwind CSS with NextJS
+- Vercel Deployment Pipeline
+
+Home Page:
+<img width="1716" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/e2e9481a-f531-4d5b-b42c-2a3aec380a90">
+
+Sign In/Sign Up Modal:
+
+<img width="1471" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/69bc5d9f-c99e-4430-93df-93ba013a30d3">
+
+Form for Creating a Poem:
+<img width="1710" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/0ed1a4f3-2110-44e5-8726-8b6f0dae3957">
+
+
+My Posts:
+
+<img width="969" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/410f6050-8465-4efb-9479-ebe4c3624a37">
+
+
+
 
 ## Getting Started
 
@@ -29,8 +62,6 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deployed on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
