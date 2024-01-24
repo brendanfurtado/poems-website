@@ -16,19 +16,19 @@ This is a public website - poems-website.vercel.app
 - Vercel Deployment Pipeline
 
 Home Page:
-<img width="1716" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/e2e9481a-f531-4d5b-b42c-2a3aec380a90">
+<img width="1716" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/aca6a7a8-0608-4a31-ac89-dc7f9b75e1ed">
 
 Sign In/Sign Up Modal:
 
-<img width="1471" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/69bc5d9f-c99e-4430-93df-93ba013a30d3">
+<img width="1471" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/65efb74e-1f58-4dc8-9a1b-07ebdb95b7a9">
 
 Form for Creating a Poem:
-<img width="1710" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/0ed1a4f3-2110-44e5-8726-8b6f0dae3957">
+<img width="1710" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/3d69b924-3881-4e66-a1c8-820d6c0e739d">
 
 
 My Posts:
 
-<img width="969" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/410f6050-8465-4efb-9479-ebe4c3624a37">
+<img width="969" alt="image" src="https://github.com/brendanfurtado/poems-website/assets/43616587/2a12c149-dd77-4837-8fd6-1f0712ecf818">
 
 
 
