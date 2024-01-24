@@ -119,7 +119,7 @@ const Navbar = () => {
 
           <div className="relative flex w-full items-center justify-end gap-3 px-2 md:justify-center lg:px-3">
             <h1 className="font-bold text-4xl text-fuchsia-900">
-              Let me Put My Poems in You
+              Poems in You Blog
             </h1>
           </div>
 
