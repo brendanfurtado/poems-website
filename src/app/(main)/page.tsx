@@ -83,16 +83,6 @@ export default function Home() {
         <h1 className="font-bold text-2xl underline text-fuchsia-500">
           Latest Posts
         </h1>
-        <div>
-          <iframe
-            src="https://open.spotify.com/embed/playlist/6CJm4vXwWyhMkQ5yZKyvnV?utm_source=generator"
-            width="100%"
-            height="352"
-            frameBorder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-          ></iframe>
-        </div>
       </div>
       {isLoading ? (
         <div className="flex justify-center h-screen">
