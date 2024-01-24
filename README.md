@@ -1,4 +1,4 @@
-This is a public website - <a href="https://poems-website.vercel.app/">Poems Website Link</a>
+This is a public website - <a href="https://poems-website.vercel.app/" target="_blank">Poems Website Link</a>
 
 ## Features:
 - Full Authentication services
